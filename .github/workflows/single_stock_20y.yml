@@ -20,6 +20,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pandas numpy pyarrow huggingface_hub
-      - name: Probe price adjustments
-        run: python price_adjustment_probe.py
+          python -m pip install pandas
+      - name: Download Stooq US history
+        run: |
+          wget -nv --timeout=60 --tries=3 https://static.stooq.com/db/h/d_us_txt.zip -O /tmp/d_us_txt.zip
+          ls -lh /tmp/d_us_txt.zip
+      - name: Probe Stooq histories
+        run: python stooq_probe.py
