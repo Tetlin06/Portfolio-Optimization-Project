@@ -22,14 +22,12 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pandas numpy pyarrow huggingface_hub yfinance requests openpyxl
           python -m pip install git+https://github.com/arielNacamulli/pitindex.git
-      - name: Run identity audit
-        run: |
-          sed -i 's/range(2005,2026)/range(2004,2026)/' single_stock_audit.py
-          python single_stock_audit.py
-      - name: Upload audit outputs
+      - name: Rank candidates
+        run: python single_stock_candidates_fast.py
+      - name: Upload candidate outputs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: single-stock-identity-audit
-          path: single_stock_audit/
+          name: single-stock-candidates
+          path: single_stock_candidates/
           retention-days: 7
