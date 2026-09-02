@@ -20,14 +20,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pandas numpy pyarrow huggingface_hub yfinance requests openpyxl
-          python -m pip install git+https://github.com/arielNacamulli/pitindex.git
-      - name: Rank candidates
-        run: python single_stock_candidates_fast.py
-      - name: Upload candidate outputs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: single-stock-candidates
-          path: single_stock_candidates/
-          retention-days: 7
+          python -m pip install pandas numpy pyarrow huggingface_hub
+      - name: Probe price adjustments
+        run: python price_adjustment_probe.py
