@@ -25,6 +25,7 @@ jobs:
         run: |
           sed -i "s/parse_monthly(get_text(FILES\['deciles'\]),'Value Weighted Returns -- Monthly')/parse_monthly(get_text(FILES['deciles']))/" momentum_research_backtest.py
           sed -i "s/parse_monthly(get_text(FILES\['size'\]),'Value Weighted Returns -- Monthly')/parse_monthly(get_text(FILES['size']))/" momentum_research_backtest.py
+          sed -i "s/rc=pick_col(fac,\['RF'\])/rc='RF'/" momentum_research_backtest.py
           python momentum_research_backtest.py
       - name: Upload outputs
         uses: actions/upload-artifact@v4
