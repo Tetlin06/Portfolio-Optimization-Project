@@ -22,7 +22,10 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pandas numpy yfinance requests
       - name: Run corrected momentum research
-        run: python momentum_research_backtest.py
+        run: |
+          sed -i "s/parse_monthly(get_text(FILES\['deciles'\]),'Value Weighted Returns -- Monthly')/parse_monthly(get_text(FILES['deciles']))/" momentum_research_backtest.py
+          sed -i "s/parse_monthly(get_text(FILES\['size'\]),'Value Weighted Returns -- Monthly')/parse_monthly(get_text(FILES['size']))/" momentum_research_backtest.py
+          python momentum_research_backtest.py
       - name: Upload outputs
         uses: actions/upload-artifact@v4
         with:
