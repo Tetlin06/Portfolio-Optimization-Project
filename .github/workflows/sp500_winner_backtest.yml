@@ -1,0 +1,31 @@
+name: Temporary S&P winner rotation backtest
+
+on:
+  push:
+    branches:
+      - chatgpt-sp500-winner-backtest-20260901
+
+permissions:
+  contents: read
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pandas numpy pyarrow yfinance requests
+      - name: Run 120 backtests
+        run: python sp500_winner_backtest.py
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: sp500-winner-backtest-results
+          path: outputs/
+          retention-days: 7
