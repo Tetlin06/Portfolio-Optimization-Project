@@ -14,9 +14,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Probe Stooq symbol CSV endpoint
+      - name: Probe Quandl WIKI historical endpoints
         run: |
-          for s in rx qlgc andv gnw nvda; do
+          for s in RX QLGC TSO GNW NVDA; do
             echo "===== $s ====="
-            curl -L -sS --max-time 30 "https://stooq.com/q/d/l/?s=${s}.us&d1=20050101&d2=20110101&i=d" | head -5
+            curl -L -sS --max-time 30 "https://data.nasdaq.com/api/v3/datasets/WIKI/${s}.csv?start_date=2005-01-01&end_date=2011-01-01" | head -5
           done
