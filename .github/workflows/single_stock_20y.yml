@@ -20,10 +20,14 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pandas numpy pyarrow huggingface_hub pitindex yfinance requests openpyxl
+          python -m pip install pandas numpy pyarrow huggingface_hub yfinance requests openpyxl
+          python -m pip install git+https://github.com/arielNacamulli/pitindex.git
       - name: Run identity audit
-        run: python single_stock_audit.py
+        run: |
+          sed -i 's/range(2005,2026)/range(2004,2026)/' single_stock_audit.py
+          python single_stock_audit.py
       - name: Upload audit outputs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: single-stock-identity-audit
