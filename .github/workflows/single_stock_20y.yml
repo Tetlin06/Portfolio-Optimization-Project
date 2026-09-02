@@ -14,11 +14,5 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect StockQuote application endpoints
-        run: |
-          curl -L -sS --max-time 30 https://stockquote.io/ -o /tmp/page.html
-          echo '--- scripts ---'
-          grep -oE 'src="[^"]+\.js[^" ]*"' /tmp/page.html || true
-          echo '--- api strings ---'
-          grep -oE 'https?://[^"'"'"' ]+|/api/[A-Za-z0-9_?&=./{}:-]+' /tmp/page.html | sort -u | head -100 || true
-          cat /tmp/page.html | head -80
+      - name: Inspect StockQuote JavaScript
+        run: bash inspect_stockquote.sh
